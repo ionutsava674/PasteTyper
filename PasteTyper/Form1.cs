@@ -55,7 +55,7 @@ namespace PasteTyper {
         Stopwatch crono = new Stopwatch();
         private Random rnd = new Random();
         private bool isPasting = false;
-        private List<KeyEvent> eventsToPaste = new List<KeyEvent>();
+        private List<KeyEventAPI.KeyEventHandler.KeyEvent> eventsToPaste = new List<KeyEventAPI.KeyEventHandler.KeyEvent>();
         private int pasteIndex = 0;
 
         private void startPasting() {
@@ -70,7 +70,7 @@ namespace PasteTyper {
             //Stopwatch.Frequency = 200;
             //Stopwatch.IsHighResolution = false;
             currentInterval = 400;
-            eventsToPaste = KeyEvent.fromString(textBox1.Text);
+            eventsToPaste = KeyEventAPI.KeyEventHandler.KeyEvent.fromString(textBox1.Text);
             pasteIndex = 0;
             timer1.Start();
             crono.Start();
@@ -78,12 +78,14 @@ namespace PasteTyper {
 
         private void nextEvent() {
             if( pasteIndex < eventsToPaste.Count ) {
-                byte code = eventsToPaste[pasteIndex].keyCode;
-                int flags = eventsToPaste[pasteIndex].flags;
-                if ( KeyEventAPI.KeyEventHandler.noShiftAndNoKeyUp(code, flags) ) {
-                    tickSound.Play();
+                //byte code = eventsToPaste[pasteIndex].keyCode;
+                //int flags = eventsToPaste[pasteIndex].flags;
+                //if (KeyEventAPI.KeyEventHandler.noShiftAndNoKeyUp(code, flags)) {
+                    if (eventsToPaste[pasteIndex].noShiftAndNoKeyUp()) {
+                        tickSound.Play();
                 } //if
-                KeyEventAPI.KeyEventHandler.keybd_event(code, 0, flags, 0);
+                //KeyEventAPI.KeyEventHandler.keybd_event(code, 0, flags, 0);
+                eventsToPaste[pasteIndex].trigger();
                 pasteIndex++;
             } //if
             else {
