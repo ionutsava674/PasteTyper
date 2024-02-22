@@ -15,6 +15,9 @@ namespace PasteTyper {
         void Form1_Load(object sender, EventArgs e) {
             textBox1.AcceptsTab = false;
             textBox1.Size = new Size(400, 300);
+            textBox1.Text = "Put your desired text here, then go to any text editor field and press Ctrl+Shift+Alt+P\r\n" +
+                "The text will be typed there automatically using virtual keyboard.\r\n" +
+                "To stop typing, press Ctrl+Shift+Alt+O";
             BackColor = Color.DarkGray;
             //textBox1.Visible = false;
 
@@ -51,7 +54,7 @@ namespace PasteTyper {
         private SoundPlayer tickSound = new SoundPlayer(Properties.Resources.tick02_60);
         private int currentInterval = 0;
         private const int minInterval = 0;
-        private const int maxInterval = 180;
+        private const int maxInterval = 90;
         Stopwatch crono = new Stopwatch();
         private Random rnd = new Random();
         private bool isPasting = false;
